@@ -21,34 +21,40 @@ const mykey = config.MY_KEY;
 	// get the names of pref
 	const { CLASS_INF: classInfo } = statisticalData
 	const prefNames = classInfo.CLASS_OBJ[2].CLASS
-	// console.log(Object.values(prefNames[0])[1])
-	let prefNameArr = []
-
-	let prefSelection = document.getElementById('prefSelection')
-	let optionTag = document.createElement('option')
-	let prefSelectionText;
-	for (let i = 0; i < prefNames.length; i++) {
-		let optionTag = document.createElement('option')
-		prefSelectionText = document.createTextNode(Object.values(prefNames[i])[1])
-		optionTag.appendChild(prefSelectionText)
-		prefSelection.appendChild(optionTag);
-	}
-
-
-	// const prefSelectionText = document.createTextNode(prefNameArr)
-
-	console.log(prefSelectionText)
-
-
 
 	// get the population
 	const groupByPref = statisticalData.DATA_INF.VALUE
-	let prefPopulationArr = []
+
+	// prep for creating table
+	let table = document.getElementById('table')
+	let trTag;
+
+
 	for (let i = 0; i < 48; i++) {
-		prefPopulationArr.push(groupByPref[i].$)
+		trTag = document.createElement('tr')
+
+		let tdTagForPref = document.createElement('td')
+		let prefSelectionText = document.createTextNode(Object.values(prefNames[i])[1])
+		console.log(Object.values(prefNames[i])[1])
+		tdTagForPref.appendChild(prefSelectionText)
+
+
+		let tdTagForPop = document.createElement('td')
+		let populationText = document.createTextNode(groupByPref[i].$)
+		tdTagForPop.appendChild(populationText)
+
+		let tdTagForPercentage = document.createElement('td')
+		let percentageText = document.createTextNode((groupByPref[i].$ / groupByPref[0].$ *100).toFixed(2))
+		tdTagForPercentage.appendChild(percentageText)
+
+		
+		trTag.appendChild(tdTagForPref);
+		trTag.appendChild(tdTagForPop);
+		trTag.appendChild(tdTagForPercentage);
+		table.appendChild(trTag);
 	}
-	// console.log(groupByPref)
-	console.log(prefPopulationArr)
+
+
 
 
 })();
